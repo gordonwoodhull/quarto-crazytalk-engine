@@ -35,7 +35,7 @@ const crazify = (s: string) => {
 };
 
 const crazyTalkEngine: ExecutionEngine = {
-  name: "crazytalk",
+  name: "cRaZyTaLk",
 
   defaultExt: ".qmd",
 
@@ -91,7 +91,7 @@ const crazyTalkEngine: ExecutionEngine = {
     }
 
     return Promise.resolve({
-      engine: "crazytalk",
+      engine: "cRaZyTaLk",
       markdown,
       supporting: [],
       filters: [],

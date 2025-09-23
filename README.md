@@ -13,4 +13,10 @@ engines:
   - url: "../../../quarto-crazytalk-engine/crazytalk.ts"
 ```
 
-to your `_quarto.yml`.
+to your `_quarto.yml`, and set
+
+```yaml
+engine: cRaZyTaLk
+```
+
+(case sensitive!) in your document.
