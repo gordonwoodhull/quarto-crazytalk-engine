@@ -91,7 +91,7 @@ const crazyTalkEngine: ExecutionEngine = {
     }
 
     return Promise.resolve({
-      engine: kMarkdownEngine,
+      engine: "crazytalk",
       markdown,
       supporting: [],
       filters: [],
