@@ -1,22 +1,71 @@
 # cRaZyTaLk markdown engine for Quarto
 
-This is a test of a Quarto external engine, a feature which may arrive in Quarto 1.9. 
+A demonstration of a Quarto external engine that transforms regular text into AlTeRnAtInG cAsE (cRaZyTaLk). This project has been updated to use the new `ExecutionEngineDiscovery` interface coming in Quarto 1.9.
 
-This is only a proof of concept and probably not the way external engines will work. In particular, Quarto is not currently available as a package so this needs to access Quarto source files locally.
+## How it Works
 
-For this reason, put this directory adjacent to `quarto-cli`, e.g. I have `~/src/quarto-cli` and `~/src/quarto-crazytalk-engine`.
+The cRaZyTaLk engine applies a simple transformation that makes every other letter uppercase or lowercase, creating a chaotic visual effect. It's the perfect way to express sarcasm, mockery, or simply add a touch of internet culture to your documents.
 
-Then, to enable cRaZyTaLk in your quarto project, use the `feature/external-engines` branch of Quarto and add
+## Setup
+
+This engine requires Quarto 1.9 (currently in development) with support for external engines.
+
+1. Place this directory adjacent to the `quarto-cli` directory, maintaining the relative paths.
+2. In your Quarto project, add the following to `_quarto.yml`:
 
 ```yaml
 engines:
-  - url: "../../../quarto-crazytalk-engine/crazytalk.ts"
+  - url: file:///absolute/path/to/quarto-crazytalk-engine/crazytalk.ts
 ```
 
-to your `_quarto.yml`, and set
+**Important**: When using the `file://` domain, the path must be absolute.
+
+## Usage
+
+In any Quarto document, set the engine to cRaZyTaLk:
 
 ```yaml
+---
+title: "My Document"
+format: html
 engine: cRaZyTaLk
+---
 ```
 
-(case sensitive!) in your document.
+The title and all content will be transformed into cRaZyTaLk.
+
+## Technical Notes
+
+This engine implements the new `ExecutionEngineDiscovery` interface with a `_discovery` flag, which is the recommended pattern for Quarto 1.9 external engines.
+
+```typescript
+const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean } = {
+  _discovery: true,
+  // ...
+};
+```
+
+### @quarto/types Package
+
+**Important**: This engine imports types from the `@quarto/types` package using a relative path to the built distribution:
+
+```typescript
+import {
+  ExecutionEngineDiscovery,
+  // Other types...
+} from "../quarto-cli/packages/quarto-types/dist/index.js";
+```
+
+The `@quarto/types` package must be built before using this engine. To build it:
+
+```bash
+cd ../quarto-cli/packages/quarto-types
+npm install
+npm run build
+```
+
+Note that `@quarto/types` is not yet published as an npm package because its API is still in flux. Using it directly like this is experimental and may break with future Quarto updates. Use at your own risk.
+
+## Example
+
+See `example.qmd` for a demonstration of famous quotes transformed into cRaZyTaLk.

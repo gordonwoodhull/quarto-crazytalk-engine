@@ -1,0 +1,35 @@
+---
+title: "Profound Wisdom in cRaZyTaLk"
+format: html
+engine: cRaZyTaLk
+---
+
+## Famous Quotes Reimagined
+
+> "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe."
+>
+> -- Albert Einstein
+
+Sometimes the most profound wisdom needs to be expressed in a way that reflects the absurdity of existence.
+
+> "In three words I can sum up everything I've learned about life: it goes on."
+>
+> -- Robert Frost
+
+When rendered through the cRaZyTaLk engine, even the simplest truth becomes a work of visual dissonance, highlighting the chaotic nature of our perceptions.
+
+## How cRaZyTaLk Works
+
+The cRaZyTaLk engine applies a simple but effective transformation:
+
+```typescript
+const crazify = (s: string) => {
+  let i = 0;
+  return s.replace(
+    /[a-z]/gi,
+    (c) => ++i % 2 ? c.toLowerCase() : c.toUpperCase(),
+  );
+};
+```
+
+This alternating case style was popularized in internet meme culture as a way to express sarcasm or mockery, but here we use it to give profound quotes an air of chaotic wisdom.

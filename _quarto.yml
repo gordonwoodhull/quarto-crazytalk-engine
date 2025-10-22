@@ -1,0 +1,6 @@
+project:
+  type: website
+  output-dir: _output
+
+engines:
+  - url: file:///Users/gordon/src/quarto-crazytalk-engine/crazytalk.ts
