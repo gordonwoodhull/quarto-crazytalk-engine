@@ -15,10 +15,8 @@ This engine requires Quarto 1.9 (currently in development) with support for exte
 
 ```yaml
 engines:
-  - url: file:///absolute/path/to/quarto-crazytalk-engine/crazytalk.ts
+  - path: "crazytalk.ts"
 ```
-
-**Important**: When using the `file://` domain, the path must be absolute.
 
 ## Usage
 
