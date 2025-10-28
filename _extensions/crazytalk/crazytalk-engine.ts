@@ -1,5 +1,5 @@
 /*
- * crazytalk.ts
+ * crazytalk-engine.ts
  *
  * Copyright (C) 2020-2025 Posit Software, PBC
  */
@@ -15,7 +15,7 @@ import {
   LaunchedExecutionEngine,
   PostProcessOptions,
   MappedString,
-  EngineProjectContext} from "../quarto-cli/packages/quarto-types/dist/index.js";
+  EngineProjectContext} from "../../../quarto-cli/packages/quarto-types/dist/index.js";
 
 // Import from Deno standard library
 import { extname } from "path";
