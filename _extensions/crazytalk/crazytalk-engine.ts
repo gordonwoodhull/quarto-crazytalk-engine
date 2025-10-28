@@ -4,18 +4,18 @@
  * Copyright (C) 2020-2025 Posit Software, PBC
  */
 
-// Import types from built distribution
-import {
+// Import types directly from source
+import type {
   DependenciesOptions,
   DependenciesResult,
   ExecuteOptions,
   ExecuteResult,
   ExecutionEngineDiscovery,
   ExecutionTarget,
-  LaunchedExecutionEngine,
+  ExecutionEngineInstance,
   PostProcessOptions,
   MappedString,
-  EngineProjectContext} from "../../../quarto-cli/packages/quarto-types/dist/index.js";
+  EngineProjectContext} from "../../../quarto-cli/packages/quarto-types/src/index";
 
 // Import from Deno standard library
 import { extname } from "path";
@@ -57,7 +57,7 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
   /**
    * Launch a dynamic execution engine with project context
    */
-  launch: (context: EngineProjectContext): LaunchedExecutionEngine => {
+  launch: (context: EngineProjectContext): ExecutionEngineInstance => {
     return {
       // Properties needed on both interfaces
       name: crazyTalkEngineDiscovery.name,
