@@ -4,7 +4,7 @@
  * Copyright (C) 2020-2025 Posit Software, PBC
  */
 
-// Import types directly from source
+// Import types from bundled types
 import type {
   DependenciesOptions,
   DependenciesResult,
@@ -15,13 +15,17 @@ import type {
   ExecutionEngineInstance,
   PostProcessOptions,
   MappedString,
-  EngineProjectContext} from "../../../quarto-cli/packages/quarto-types/src/index";
+  EngineProjectContext,
+  QuartoAPI,
+} from "./types/quarto-types.d.ts";
 
 // Import from Deno standard library
 import { extname } from "path";
 
 export const kMdExtensions = [".md", ".markdown"];
 export const kQmdExtensions = [".qmd"];
+
+let quarto: QuartoAPI;
 
 const crazify = (s: string) => {
   let i = 0;
@@ -38,6 +42,10 @@ const crazify = (s: string) => {
 const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean } = {
   // Flag to indicate this is a discovery engine (will be removed in stable 1.9)
   _discovery: true,
+
+  init: (quartoAPI: QuartoAPI) => {
+    quarto = quartoAPI;
+  },
 
   // Basic engine properties
   name: "cRaZyTaLk",
@@ -67,24 +75,22 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
        * Read file and convert to markdown with source mapping
        */
       markdownForFile(file: string): Promise<MappedString> {
-        return Promise.resolve(context.quarto.mappedString.fromFile(file));
+        return Promise.resolve(quarto.mappedString.fromFile(file));
       },
 
       /**
        * Create an execution target for a file
        */
       target: (file: string, _quiet?: boolean, markdown?: MappedString) => {
-        if (markdown === undefined) {
-          markdown = context.quarto.mappedString.fromFile(file);
-        }
-        const metadata = context.quarto.markdownRegex.extractYaml(markdown.value);
+        const md = markdown ?? quarto.mappedString.fromFile(file);
+        const metadata = quarto.markdownRegex.extractYaml(md.value);
         if (metadata?.title) {
           metadata.title = crazify(metadata.title as string);
         }
         const target: ExecutionTarget = {
           source: file,
           input: file,
-          markdown,
+          markdown: md,
           metadata,
         };
         return Promise.resolve(target);
@@ -95,7 +101,7 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
        */
       partitionedMarkdown: (file: string) => {
         return Promise.resolve(
-          context.quarto.markdownRegex.partition(Deno.readTextFileSync(file)),
+          quarto.markdownRegex.partition(Deno.readTextFileSync(file)),
         );
       },
 
@@ -108,7 +114,7 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
 
         // if it's plain md, validate that it doesn't have executable cells in it
         if (extname(options.target.input).toLowerCase() === ".md") {
-          const languages = context.quarto.markdownRegex.getLanguages(markdown);
+          const languages = quarto.markdownRegex.getLanguages(markdown);
           if (languages.size > 0) {
             throw new Error(
               "You must use the .qmd extension for documents with executable code.",
