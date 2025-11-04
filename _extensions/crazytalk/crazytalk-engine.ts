@@ -47,6 +47,8 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
     quarto = quartoAPI;
   },
 
+  quartoRequired: ">1.9",
+
   // Basic engine properties
   name: "cRaZyTaLk",
   defaultExt: ".qmd",
@@ -61,6 +63,9 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean
   },
   canFreeze: false,
   generatesFigures: false,
+  checkInstallation: async(_) => {
+    console.log(crazify('crazytalk validates'));
+  },
 
   /**
    * Launch a dynamic execution engine with project context
