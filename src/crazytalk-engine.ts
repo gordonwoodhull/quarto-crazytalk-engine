@@ -4,7 +4,7 @@
  * Copyright (C) 2020-2025 Posit Software, PBC
  */
 
-// Import types from bundled types
+// Import types from Quarto via import map
 import type {
   DependenciesOptions,
   DependenciesResult,
@@ -17,7 +17,7 @@ import type {
   MappedString,
   EngineProjectContext,
   QuartoAPI,
-} from "./types/quarto-types.d.ts";
+} from "@quarto/types";
 
 // Import from Deno standard library
 import { extname } from "path";
@@ -37,12 +37,8 @@ const crazify = (s: string) => {
 
 /**
  * cRaZyTaLk engine discovery implementation
- * This uses the new ExecutionEngineDiscovery interface with _discovery flag
  */
-const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & { _discovery: boolean } = {
-  // Flag to indicate this is a discovery engine (will be removed in stable 1.9)
-  _discovery: true,
-
+const crazyTalkEngineDiscovery: ExecutionEngineDiscovery = {
   init: (quartoAPI: QuartoAPI) => {
     quarto = quartoAPI;
   },

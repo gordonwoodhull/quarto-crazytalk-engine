@@ -30,61 +30,34 @@ engine: cRaZyTaLk
 
 The title and all content will be transformed into cRaZyTaLk.
 
-## Development Setup
+## Development
 
-This engine extension requires Quarto 1.9 (currently in development).
+This engine extension requires Quarto 1.9 or higher.
 
-For development:
-
-1. Place this directory adjacent to the `quarto-cli` directory, maintaining the relative paths.
-2. Ensure the `@quarto/types` package is built:
+To build the extension:
 
 ```bash
-cd ../quarto-cli/packages/quarto-types
-npm install
-npm run build
+quarto dev-call build-ts-extension
 ```
+
+This will bundle `src/crazytalk-engine.ts` into `_extensions/crazytalk/crazytalk-engine.js`.
 
 ## Technical Notes
-
-This engine implements the new `ExecutionEngineDiscovery` interface with a `_discovery` flag:
-
-```typescript
-const crazyTalkEngineDiscovery: ExecutionEngineDiscovery & {
-  _discovery: boolean;
-} = {
-  _discovery: true,
-  // ...
-};
-```
-
-This is a temporary flag that indicates the engine supports the new Quarto 1.9 ExecutionEngineDiscovery interface. This flag likely won't be needed when version 1.9 becomes the stable release.
 
 ### Extension Structure
 
 The extension is structured as follows:
 
 ```
+src/
+  └── crazytalk-engine.ts    # TypeScript source
 _extensions/
   └── crazytalk/
       ├── _extension.yml      # Extension metadata
-      └── crazytalk-engine.ts # Engine implementation
+      └── crazytalk-engine.js # Bundled engine (built from src/)
 ```
 
-### @quarto/types Package
-
-**Important**: This engine imports types from the `@quarto/types` package using a relative path to the built distribution:
-
-```typescript
-import {
-  ExecutionEngineDiscovery,
-  // Other types...
-} from "../../../quarto-cli/packages/quarto-types/dist/index.js";
-```
-
-The `@quarto/types` package must be built before using this engine. See [Development Setup](#development-setup).
-
-Note that `@quarto/types` is not yet published as an npm package because its API is still in flux. Using it directly like this is experimental and may break with future Quarto updates. Use at your own risk.
+The TypeScript source is bundled using `quarto dev-call build-ts-extension`.
 
 ## Example
 
