@@ -37,7 +37,7 @@ This engine extension requires Quarto 1.9 or higher.
 To build the extension:
 
 ```bash
-quarto dev-call build-ts-extension
+quarto call build-ts-extension
 ```
 
 This will bundle `src/crazytalk-engine.ts` into `_extensions/crazytalk/crazytalk-engine.js`.
@@ -57,7 +57,7 @@ _extensions/
       └── crazytalk-engine.js # Bundled engine (built from src/)
 ```
 
-The TypeScript source is bundled using `quarto dev-call build-ts-extension`.
+The TypeScript source is bundled using `quarto call build-ts-extension`.
 
 ## Example
 

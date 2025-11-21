@@ -60,7 +60,7 @@ const crazyTalkEngineDiscovery: ExecutionEngineDiscovery = {
   canFreeze: false,
   generatesFigures: false,
   checkInstallation: async(_) => {
-    console.log(crazify('crazytalk validates'));
+    quarto.console.info(crazify('crazytalk validates'));
   },
 
   /**
